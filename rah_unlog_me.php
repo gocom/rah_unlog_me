@@ -115,11 +115,11 @@
 		if($event != 'log' || !trim($prefs['rah_unlog_me_ip']))
 			return;
 		
-		$ips = quote_list(doArray(explode(',',$prefs['rah_unlog_me_ip']), 'trim'));
+		$ips = quote_list(do_list($prefs['rah_unlog_me_ip']));
 		
 		safe_delete(
 			'txp_log',
-			'ip in('.implode(', ',$ips).')'
+			'ip in('.implode(',',$ips).')'
 		);
 	}
 
