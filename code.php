@@ -1,104 +1,185 @@
-<?php	##################
-	#
-	#	rah_unlog_me-plugin for Textpattern
-	#	version 0.1
-	#	by Jukka Svahn
-	#	http://rahforum.biz
-	#
-	###################
+<?php
+/**
+	Rah_unlog_me v1.0
+	Plugin for Textpattern
+	by Jukka Svahn
+	http://rahforum.biz
 
-	if (@txpinterface == 'admin') {
-		rah_unlog_me_install();
-		rah_unlog_me_do();
-		add_privs('rah_unlog_me', '1,2');
-		register_tab("extensions", "rah_unlog_me","Unlog me");
-		register_callback("rah_unlog_me", "rah_unlog_me");
+	Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
+	Licensed under GNU Genral Public License version 2
+	http://www.gnu.org/licenses/gpl-2.0.html
+*/
+
+	if(@txpinterface == 'admin') {
+		rah_unlog_me();
+		register_callback('rah_unlog_me_prefs','plugin_prefs.rah_unlog_me');
+		register_callback('rah_unlog_me_installer','plugin_lifecycle.rah_unlog_me');
+		register_callback('rah_unlog_me_head','admin_side','head_end');
 	}
 
-	function rah_unlog_me_install() {
-		safe_query(
-			"CREATE TABLE IF NOT EXISTS ".safe_pfx('rah_unlog_me')." (
-				`name` varchar(255) NOT NULL default '',
-				`value` longtext NOT NULL default '',
-				PRIMARY KEY (`name`)
-			)"
-		);
-		if(safe_count('rah_unlog_me',"name='ip'") == 0) safe_insert('rah_unlog_me',"name='ip', value=''");
-		if(safe_count('rah_unlog_me',"name='auto'") == 0) safe_insert('rah_unlog_me',"name='auto', value='no'");
+/**
+	Fixing the pophelp links on the prefs
+	panel
+*/
+
+	function rah_unlog_me_head() {
+		
+		global $event;
+		
+		if($event != 'prefs')
+			return;
+		
+		echo <<<EOF
+			<script type="text/javascript">
+				$(document).ready(function(){
+					$('tr#prefs-rah_unlog_me_auto a').
+						attr('href','?event=plugin&step=plugin_help&name=rah_unlog_me#pref-auto').
+						removeAttr('onclick')
+					;
+					$('tr#prefs-rah_unlog_me_ip a').
+						attr('href','?event=plugin&step=plugin_help&name=rah_unlog_me#pref-ip').
+						removeAttr('onclick')
+					;
+				});
+			</script>
+EOF;
 	}
 
-	function rah_unlog_me_do() {
-		@$ips = fetch('value','rah_unlog_me','name','ip');
-		@$auto = fetch('value','rah_unlog_me','name','auto');
-		if($ips) {
-			$ips = explode(',',$ips);
-			foreach($ips as $ip) {
-				$ip = doSlash(trim($ip));
-				safe_delete(
-					'txp_log',"ip='$ip'"
-				);
-			}
-		}
-		if($auto == 'yes' && isset($_SERVER['REMOTE_ADDR'])) {
+/**
+	The installer and uninstaller
+*/
+
+	function rah_unlog_me_installer($event='', $step='') {
+		
+		/*
+			If called on plugin uninstall,
+			deletes the preferences
+		*/
+		
+		if($step == 'delete') {
 			safe_delete(
-				'txp_log',"ip='".doSlash($_SERVER['REMOTE_ADDR'])."'"
+				'txp_prefs',
+				"name in('rah_unlog_me_auto','rah_unlog_me_ip')"
+			);
+			return;
+		}
+		
+		global $prefs, $event, $textarray;
+		
+		if($event == 'prefs') {
+			
+			/*
+				Generate language strings if
+				not existing
+			*/
+			
+			foreach(
+				array(
+					'rah_unlog_me_auto' => 'Exclude site authors\' IPs from the logs?',
+					'rah_unlog_me_ip' => 'Comma separated list of additional IPs to exclude from the logs',
+				) as $string => $translation
+			)
+				if(!isset($textarray[$string]))
+					$textarray[$string] = $translation;
+			
+
+		}
+		
+		if(
+			isset($prefs['rah_unlog_me_auto']) &&
+			isset($prefs['rah_unlog_me_ip'])
+		)
+			return;
+			
+		/*
+			Run migration and clean-up if older version was
+			installed
+		*/
+		
+		@$rs = 
+			safe_rows(
+				'*',
+				'rah_unlog_me',
+				'1=1'
+			);
+		
+		$default['auto'] = $default['ip'] = '';
+		
+		if($rs && is_array($rs)) {
+			foreach($rs as $a)
+				$default[$a['name']] = $a['value'];
+			
+			@safe_query(
+				'DROP TABLE IF EXISTS '.safe_pfx('rah_unlog_me')
 			);
 		}
+		
+		if(!isset($prefs['rah_unlog_me_auto']))
+			safe_insert(
+				'txp_prefs',
+				"prefs_id=1,
+				name='rah_unlog_me_auto',
+				val=".($default['auto'] == 'no' ? 0 : 1).",
+				type=0,
+				event='publish',
+				html='yesnoradio',
+				position=221"
+			);
+		
+		if(!isset($prefs['rah_unlog_me_ip']))
+			safe_insert(
+				'txp_prefs',
+				"prefs_id=1,
+				name='rah_unlog_me_ip',
+				val='".doSlash($default['ip'])."',
+				type=0,
+				event='publish',
+				html='text_input',
+				position=222"
+			);
+		
+		$prefs['rah_unlog_me_ip'] = $default['ip'];
+		$prefs['rah_unlog_me_auto'] = 1;
 	}
+
+/**
+	Removes IPs from the logs
+*/
 
 	function rah_unlog_me() {
-		global $step;
-		require_privs('rah_unlog_me');
-		if(in_array($step,array(
-			'rah_unlog_me_save'
-		))) $step();
-		else rah_unlog_me_form();
+		
+		rah_unlog_me_installer();
+		
+		global $prefs, $event;
+		
+		if($prefs['logging'] == 'none')
+			return;
+		
+		if($prefs['rah_unlog_me_auto'] == 1)
+			safe_delete(
+				'txp_log',
+				"ip='".doSlash(serverSet('REMOTE_ADDR'))."'"
+			);
+		
+		if($event != 'log' || !trim($prefs['rah_unlog_me_ip']))
+			return;
+		
+		foreach(explode(',',$prefs['rah_unlog_me_ip']) as $ip)
+			safe_delete(
+				'txp_log',
+				"ip='".doSlash(trim($ip))."'"
+			);
 	}
 
-	function rah_unlog_me_form($message='') {
-		pagetop('Unlog IPs',$message);
-		$value = fetch('value','rah_unlog_me','name','ip');
-		$auto = fetch('value','rah_unlog_me','name','auto');
-		echo n.
-			'	<form method="post" action="index.php" style="width:950px;margin:0 auto;">'.n.
-			'		<h1><strong>rah_unlog_me</strong> | Unlog IPs</h1>'.n.
-			'		<p>&#187; <a href="?event=plugin&amp;step=plugin_help&amp;name=rah_unlog_me">Documentation</a></p>'.n.
-			'		<p><label for="rah_unlog_me_value">Unloged IPs:</label></p>'.n.
-			'		<p><textarea name="rah_unlog_me_value" id="rah_unlog_me_value" cols="150" rows="20">'.htmlspecialchars($value).'</textarea></p>'.n.
-			'		<p>Define IPs that you don\'t want to log to the field above. Comma (<code>,</code>) seperated list if multiple.'.
-			(
-				(isset($_SERVER['REMOTE_ADDR'])) ? 
-					' Currently your IP address returned is <code>'.$_SERVER['REMOTE_ADDR'].'</code>'
-				:
-					''
-			).'</p>'.n.
-			'		<p>'.n.
-			'			<label for="rah_unlog_me_auto">Automatically remove authors\' IPs from logs when they login?</label>'.n.
-			'			<select id="rah_unlog_me_auto" name="rah_unlog_me_auto">'.n.
-			'				<option value="yes"'.(($auto == 'yes') ? ' selected="selected"' : '').'>Yes</option>'.n.
-			'				<option value="no"'.(($auto == 'no') ? ' selected="selected"' : '').'>No</option>'.n.
-			'			</select>'.n.
-			'		</p>'.n.
-			'		<input type="hidden" name="event" value="rah_unlog_me" />'.n.
-			'		<input type="hidden" name="step" value="rah_unlog_me_save" />'.n.
-			'		<p><input type="submit" name="" value="Save" class="publish" /></p>'.n.
-			'	</form>'.n;
-	}
+/**
+	Redirects to the preferences panel
+*/
 
-	function rah_unlog_me_save() {
-		extract(doSlash(gpsa(array(
-			'rah_unlog_me_value',
-			'rah_unlog_me_auto'
-		))));
-		safe_update(
-			'rah_unlog_me',
-			"value='$rah_unlog_me_value'",
-			"name='ip'"
-		);
-		safe_update(
-			'rah_unlog_me',
-			"value='$rah_unlog_me_auto'",
-			"name='auto'"
-		);
-		rah_unlog_me_form('Updated.');
-	}?>
+	function rah_unlog_me_prefs() {
+		header('Location: ?event=prefs#prefs-logging');
+		echo 
+			'<p id="message">'.n.
+			'	<a href="?event=prefs#prefs-logging">View the preferences</a>'.n.
+			'</p>';
+	}
+?>

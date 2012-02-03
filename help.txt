@@ -1,42 +1,62 @@
 h1. rah_unlog_me
 
-p. Unlog IP addresses. With rah_unlog_me you can exclude users by IP from "Textpattern's":http://www.textpattern.com visitor logs. For example you could exclude your own hits, site authors and hits made by nasty bots. The plugin includes an interface where you can define unlogging settings.
+p. Exclude set of IP addresses from Textpattern's visitor logs. Automatically exclude your own hits, site authors and hits made by nasty bots. The plugin adds easy to use logging options to Textpattern's preferences pane.
 
-* Version: 0.1
-* Updated: 2009/05/24 11:50 PM GMT+3
+* Version: 1.0
+* Updated: 2011/03/13 8:20 PM UTC
 
 h3. Table of Contents
 
 * "List of features":#list-of-features
 * "Requirements":#requirements
 * "Installation and usage":#installation-and-usage
+* "Preferences pane*:#preferences-pane
 * "Changelog":#changelog
 
 h3(#list-of-features). List of features
 
-* Exclude IPs from logs.
-* An interface under Extensions tab.
-* Auto-exclude IPs which are used to login to the backend.
+* Exclude list of IPs from visitor logs.
+* Auto-remove IPs of site editors on log in.
+* Integrates well with Textpattern's native user-interface.
 
 h3(#requirements). Requirements
 
 p. Minimum requirements:
 
 * PHP 4.3.0+
-* Textpattern 4.x.x+
-
-p. Recommended:
-
-* PHP 5.1.2+
-* Textpattern 4.0.8+
+* Textpattern 4.0.7 or newer.
 
 h3(#installation-and-usage). Installation and usage
 
-p. The general behavior stands: paste plugin code to the plugin installer textarea and run the automatic setup. Then just activate the plugin and you are ready to use rah_unlog_me's tools.
+p. The general behavior stands when it comes to installing rah_unlog_me.
 
-p. The plugin's, rah_unlog_me, admin panel is located under _Textpattern / Extensions / Unlog me_. From there you can define the settings.
+* Navigate to Plugins pane: TXP/Admin/Plugins.
+* Copy and paste downloaded plugin code to the plugin installer field
+ and run the automatic setup.
+* When all done, just active the plugin on the plugin list and you are ready to use rah_unlog_me's additional options.
+
+p. You can find rah_unlog_me's preferences from Textpattern's preferences panel (Admin/Preferences), next to other logging related preferences.
+
+h3(#preferences-pane). Preferences pane
+
+Rah_unlog_me will add two new options to Textpattern's Preferences pane, found at /Textpattern/Admin/Preferences; _an option to automatically exclude site authors' IPs_ and a field to define _a list of additional IPs to exclude_.
+
+h4(#pref-auto). Exclude site authors' IPs from the logs?
+
+If the first option, _Exclude site authors' IPs from the logs?_ is set to _Yes_, IPs of admins are removed from the logs when the user logs in to Textpattern's backend.
+
+h4(#pref-ip). Comma separated list of additional IPs to exclude from the logs
+
+The second option of rah_unlog_me is a field where you can define a list of IPs which will be excluded from the logs. You can define as many IPs as you want. Use commas (@,@) to separate multiple IPs.
 
 h3(#changelog). Changelog
+
+p. *Version 1.0*
+
+* Integrated plugin's preferences to Textpattern's native preferences pane.
+* Better excluding/removing script. No longer searches IPs from the logs if it doesn't need to; takes no action when logs are off, and removes the additional IPs from logs only when accessing the logs pane.
+* Language string support.
+* Now requires TXP 4.0.7.
 
 p. *Version 0.1*
 

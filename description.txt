@@ -1,1 +1,1 @@
-Exclude IPs from visitor Logs
+Exclude IPs from visitor logs
