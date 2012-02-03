@@ -1,9 +1,9 @@
 h1. rah_unlog_me
 
-p. Exclude set of IP addresses from Textpattern's visitor logs. Automatically exclude your own hits, site authors and hits made by nasty bots. The plugin adds easy to use logging options to Textpattern's preferences pane.
+p. Exclude set of IP addresses from "Textpattern's":http://textpattern.com/ visitor logs. Automatically exclude your own hits, site authors and hits made by nasty bots. The plugin adds easy-to-use logging options to Textpattern's preferences pane.
 
-* Version: 1.1
-* Updated: 2011/03/14 5:15 PM UTC
+* Version: 1.2
+* Updated: 2011/06/03 7:50 AM UTC
 
 h3. Table of Contents
 
@@ -50,6 +50,11 @@ h4(#pref-ip). Comma separated list of additional IPs to exclude from the logs
 The second option of rah_unlog_me is a field where you can define a list of IPs which will be excluded from the logs. You can define as many IPs as you want. Use commas (@,@) to separate multiple IPs.
 
 h3(#changelog). Changelog
+
+p. *Version 1.2*
+
+* Don't throw up JavaScript to top of Preferences pane when JavaScript is disabled.
+* Sweep pre-defined list of IPs with a single query.
 
 p. *Version 1.1*
 

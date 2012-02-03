@@ -1,14 +1,15 @@
-<?php
-/**
-	Rah_unlog_me v1.1
-	Plugin for Textpattern
-	by Jukka Svahn
-	http://rahforum.biz
-
-	Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
-	Licensed under GNU Genral Public License version 2
-	http://www.gnu.org/licenses/gpl-2.0.html
-*/
+<?php	##################
+	#
+	#	Rah_unlog_me v1.2
+	#	Plugin for Textpattern
+	#	by Jukka Svahn
+	#	http://rahforum.biz
+	#
+	#	Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
+	#	Licensed under GNU Genral Public License version 2
+	#	http://www.gnu.org/licenses/gpl-2.0.html
+	#
+	##################
 
 	if(@txpinterface == 'admin') {
 		rah_unlog_me();
@@ -19,8 +20,7 @@
 	}
 
 /**
-	Fixing the pophelp links on the prefs
-	panel
+	Fixing the pophelp links on the prefs panel.
 */
 
 	function rah_unlog_me_head() {
@@ -32,6 +32,7 @@
 		
 		echo <<<EOF
 			<script type="text/javascript">
+				<!--
 				$(document).ready(function(){
 					$('tr#prefs-rah_unlog_me_auto a').
 						attr('href','?event=plugin&step=plugin_help&name=rah_unlog_me#pref-auto').
@@ -42,12 +43,15 @@
 						removeAttr('onclick')
 					;
 				});
+				-->
 			</script>
 EOF;
 	}
 
 /**
-	The installer and uninstaller
+	Does installing and uninstalling.
+	@param $event string The admin-side event.
+	@param $step string The admin-side, plugin-lifecycle step.	
 */
 
 	function rah_unlog_me_installer($event='', $step='') {
@@ -153,8 +157,17 @@ EOF;
 		
 		global $prefs, $event;
 		
+		/*
+			Logging is off, end here
+		*/
+		
 		if($prefs['logging'] == 'none')
 			return;
+		
+		/*
+			Remove user's IP from logs when accessing
+			admin-side
+		*/
 		
 		if($prefs['rah_unlog_me_auto'] == 1)
 			safe_delete(
@@ -162,14 +175,21 @@ EOF;
 				"ip='".doSlash(serverSet('REMOTE_ADDR'))."'"
 			);
 		
+		/*
+			Remove pre-defined list of IPs (if any)
+			when accessing Logs
+		*/
+		
 		if($event != 'log' || !trim($prefs['rah_unlog_me_ip']))
 			return;
 		
 		foreach(explode(',',$prefs['rah_unlog_me_ip']) as $ip)
-			safe_delete(
-				'txp_log',
-				"ip='".doSlash(trim($ip))."'"
-			);
+			$ips[] = "'".doSlash(trim($ip))."'";
+		
+		safe_delete(
+			'txp_log',
+			'ip in('.implode(', ',$ips).')'
+		);
 	}
 
 /**
