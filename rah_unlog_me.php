@@ -16,9 +16,9 @@
 	if(@txpinterface == 'admin') {
 		rah_unlog_me_installer();
 		rah_unlog_me();
-		add_privs('plugin_prefs.rah_unlog_me','1,2');
-		register_callback('rah_unlog_me_prefs','plugin_prefs.rah_unlog_me');
-		register_callback('rah_unlog_me_installer','plugin_lifecycle.rah_unlog_me');
+		add_privs('plugin_prefs.rah_unlog_me', '1,2');
+		register_callback('rah_unlog_me_prefs', 'plugin_prefs.rah_unlog_me');
+		register_callback('rah_unlog_me_installer', 'plugin_lifecycle.rah_unlog_me');
 	}
 
 /**
@@ -32,7 +32,7 @@
 		if($step == 'deleted') {
 			safe_delete(
 				'txp_prefs',
-				"name in('rah_unlog_me_auto','rah_unlog_me_ip')"
+				"name LIKE 'rah\_unlog\_me\_%'"
 			);
 			return;
 		}
