@@ -1,0 +1,43 @@
+h1. rah_unlog_me
+
+p. Unlog IP addresses. With rah_unlog_me you can exclude users by IP from "Textpattern's":http://www.textpattern.com visitor logs. For example you could exclude your own hits, site authors and hits made by nasty bots. The plugin includes an interface where you can define unlogging settings.
+
+* Version: 0.1
+* Updated: 2009/05/24 11:50 PM GMT+3
+
+h3. Table of Contents
+
+* "List of features":#list-of-features
+* "Requirements":#requirements
+* "Installation and usage":#installation-and-usage
+* "Changelog":#changelog
+
+h3(#list-of-features). List of features
+
+* Exclude IPs from logs.
+* An interface under Extensions tab.
+* Auto-exclude IPs which are used to login to the backend.
+
+h3(#requirements). Requirements
+
+p. Minimum requirements:
+
+* PHP 4.3.0+
+* Textpattern 4.x.x+
+
+p. Recommended:
+
+* PHP 5.1.2+
+* Textpattern 4.0.8+
+
+h3(#installation-and-usage). Installation and usage
+
+p. The general behavior stands: paste plugin code to the plugin installer textarea and run the automatic setup. Then just activate the plugin and you are ready to use rah_unlog_me's tools.
+
+p. The plugin's, rah_unlog_me, admin panel is located under _Textpattern / Extensions / Unlog me_. From there you can define the settings.
+
+h3(#changelog). Changelog
+
+p. *Version 0.1*
+
+* First release
