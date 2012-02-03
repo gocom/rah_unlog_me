@@ -2,8 +2,8 @@ h1. rah_unlog_me
 
 p. Exclude set of IP addresses from Textpattern's visitor logs. Automatically exclude your own hits, site authors and hits made by nasty bots. The plugin adds easy to use logging options to Textpattern's preferences pane.
 
-* Version: 1.0
-* Updated: 2011/03/13 8:20 PM UTC
+* Version: 1.1
+* Updated: 2011/03/14 5:15 PM UTC
 
 h3. Table of Contents
 
@@ -24,7 +24,7 @@ h3(#requirements). Requirements
 p. Minimum requirements:
 
 * PHP 4.3.0+
-* Textpattern 4.0.7 or newer.
+* Textpattern 4.2.0 or newer.
 
 h3(#installation-and-usage). Installation and usage
 
@@ -51,12 +51,19 @@ The second option of rah_unlog_me is a field where you can define a list of IPs 
 
 h3(#changelog). Changelog
 
+p. *Version 1.1*
+
+* Fixed typo in the uninstaller. Called step from "delete" to "deleted".
+* Added forgotten flags.
+* Added missing privileges for the plugins pane's options link.
+* Fixed typo in docs. Changed required TXP version from 4.0.7 to 4.2.0.
+
 p. *Version 1.0*
 
 * Integrated plugin's preferences to Textpattern's native preferences pane.
 * Better excluding/removing script. No longer searches IPs from the logs if it doesn't need to; takes no action when logs are off, and removes the additional IPs from logs only when accessing the logs pane.
 * Language string support.
-* Now requires TXP 4.0.7.
+* Now requires TXP 4.2.0 for full feature support.
 
 p. *Version 0.1*
 

@@ -1,6 +1,6 @@
 <?php
 /**
-	Rah_unlog_me v1.0
+	Rah_unlog_me v1.1
 	Plugin for Textpattern
 	by Jukka Svahn
 	http://rahforum.biz
@@ -12,6 +12,7 @@
 
 	if(@txpinterface == 'admin') {
 		rah_unlog_me();
+		add_privs('plugin_prefs.rah_unlog_me','1,2');
 		register_callback('rah_unlog_me_prefs','plugin_prefs.rah_unlog_me');
 		register_callback('rah_unlog_me_installer','plugin_lifecycle.rah_unlog_me');
 		register_callback('rah_unlog_me_head','admin_side','head_end');
@@ -56,7 +57,7 @@ EOF;
 			deletes the preferences
 		*/
 		
-		if($step == 'delete') {
+		if($step == 'deleted') {
 			safe_delete(
 				'txp_prefs',
 				"name in('rah_unlog_me_auto','rah_unlog_me_ip')"
@@ -179,7 +180,7 @@ EOF;
 		header('Location: ?event=prefs#prefs-logging');
 		echo 
 			'<p id="message">'.n.
-			'	<a href="?event=prefs#prefs-logging">View the preferences</a>'.n.
+			'	<a href="?event=prefs#prefs-logging">'.gTxt('continue').'</a>'.n.
 			'</p>';
 	}
 ?>
