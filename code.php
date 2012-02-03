@@ -1,6 +1,6 @@
 <?php	##################
 	#
-	#	Rah_unlog_me v1.2
+	#	Rah_unlog_me v1.3
 	#	Plugin for Textpattern
 	#	by Jukka Svahn
 	#	http://rahforum.biz
@@ -12,40 +12,11 @@
 	##################
 
 	if(@txpinterface == 'admin') {
+		rah_unlog_me_installer();
 		rah_unlog_me();
 		add_privs('plugin_prefs.rah_unlog_me','1,2');
 		register_callback('rah_unlog_me_prefs','plugin_prefs.rah_unlog_me');
 		register_callback('rah_unlog_me_installer','plugin_lifecycle.rah_unlog_me');
-		register_callback('rah_unlog_me_head','admin_side','head_end');
-	}
-
-/**
-	Fixing the pophelp links on the prefs panel.
-*/
-
-	function rah_unlog_me_head() {
-		
-		global $event;
-		
-		if($event != 'prefs')
-			return;
-		
-		echo <<<EOF
-			<script type="text/javascript">
-				<!--
-				$(document).ready(function(){
-					$('tr#prefs-rah_unlog_me_auto a').
-						attr('href','?event=plugin&step=plugin_help&name=rah_unlog_me#pref-auto').
-						removeAttr('onclick')
-					;
-					$('tr#prefs-rah_unlog_me_ip a').
-						attr('href','?event=plugin&step=plugin_help&name=rah_unlog_me#pref-ip').
-						removeAttr('onclick')
-					;
-				});
-				-->
-			</script>
-EOF;
 	}
 
 /**
@@ -55,11 +26,6 @@ EOF;
 */
 
 	function rah_unlog_me_installer($event='', $step='') {
-		
-		/*
-			If called on plugin uninstall,
-			deletes the preferences
-		*/
 		
 		if($step == 'deleted') {
 			safe_delete(
@@ -72,12 +38,6 @@ EOF;
 		global $prefs, $event, $textarray;
 		
 		if($event == 'prefs') {
-			
-			/*
-				Generate language strings if
-				not existing
-			*/
-			
 			foreach(
 				array(
 					'rah_unlog_me_auto' => 'Exclude site authors\' IPs from the logs?',
@@ -86,10 +46,8 @@ EOF;
 			)
 				if(!isset($textarray[$string]))
 					$textarray[$string] = $translation;
-			
-
 		}
-		
+
 		if(
 			isset($prefs['rah_unlog_me_auto']) &&
 			isset($prefs['rah_unlog_me_ip'])
@@ -152,39 +110,21 @@ EOF;
 */
 
 	function rah_unlog_me() {
-		
-		rah_unlog_me_installer();
-		
 		global $prefs, $event;
-		
-		/*
-			Logging is off, end here
-		*/
 		
 		if($prefs['logging'] == 'none')
 			return;
 		
-		/*
-			Remove user's IP from logs when accessing
-			admin-side
-		*/
-		
 		if($prefs['rah_unlog_me_auto'] == 1)
 			safe_delete(
 				'txp_log',
-				"ip='".doSlash(serverSet('REMOTE_ADDR'))."'"
+				"ip='".doSlash(remote_addr())."'"
 			);
-		
-		/*
-			Remove pre-defined list of IPs (if any)
-			when accessing Logs
-		*/
 		
 		if($event != 'log' || !trim($prefs['rah_unlog_me_ip']))
 			return;
 		
-		foreach(explode(',',$prefs['rah_unlog_me_ip']) as $ip)
-			$ips[] = "'".doSlash(trim($ip))."'";
+		$ips = quote_list(doArray(explode(',',$prefs['rah_unlog_me_ip']), 'trim'));
 		
 		safe_delete(
 			'txp_log',
