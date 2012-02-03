@@ -1,0 +1,4 @@
+#@admin
+#Default language, en-us, en-gb
+rah_unlog_me_auto => Exclude site authors' IPs from the logs?
+rah_unlog_me_ip => Comma separated list of additional IPs to exclude from the logs

@@ -29,6 +29,8 @@
 
 	function rah_unlog_me_installer($event='', $step='') {
 		
+		global $prefs;
+		
 		if($step == 'deleted') {
 			safe_delete(
 				'txp_prefs',
@@ -36,22 +38,9 @@
 			);
 			return;
 		}
-		
-		global $prefs, $event, $textarray;
-		
-		if($event == 'prefs') {
-			foreach(
-				array(
-					'rah_unlog_me_auto' => 'Exclude site authors\' IPs from the logs?',
-					'rah_unlog_me_ip' => 'Comma separated list of additional IPs to exclude from the logs',
-				) as $string => $translation
-			)
-				if(!isset($textarray[$string]))
-					$textarray[$string] = $translation;
-		}
 
 		if(
-			isset($prefs['rah_unlog_me_auto']) &&
+			isset($prefs['rah_unlog_me_auto']) && 
 			isset($prefs['rah_unlog_me_ip'])
 		)
 			return;
