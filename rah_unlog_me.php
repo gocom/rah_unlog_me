@@ -1,15 +1,17 @@
-<?php	##################
-	#
-	#	Rah_unlog_me v1.3
-	#	Plugin for Textpattern
-	#	by Jukka Svahn
-	#	http://rahforum.biz
-	#
-	#	Copyright (C) 2011 Jukka Svahn <http://rahforum.biz>
-	#	Licensed under GNU Genral Public License version 2
-	#	http://www.gnu.org/licenses/gpl-2.0.html
-	#
-	##################
+<?php
+
+/**
+ * Rah_unlog_me plugin for Textpattern CMS
+ *
+ * @author Jukka Svahn
+ * @date 2009-
+ * @license GNU GPLv2
+ * @link http://rahforum.biz/plugins/rah_unlog_me
+ *
+ * Copyright (C) 2012 Jukka Svahn <http://rahforum.biz>
+ * Licensed under GNU Genral Public License version 2
+ * http://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 	if(@txpinterface == 'admin') {
 		rah_unlog_me_installer();
@@ -20,10 +22,10 @@
 	}
 
 /**
-	Does installing and uninstalling.
-	@param $event string The admin-side event.
-	@param $step string The admin-side, plugin-lifecycle step.	
-*/
+ * Does installing and uninstalling.
+ * @param string $event The admin-side event.
+ * @param string $step The admin-side, plugin-lifecycle step.	
+ */
 
 	function rah_unlog_me_installer($event='', $step='') {
 		
@@ -106,8 +108,8 @@
 	}
 
 /**
-	Removes IPs from the logs
-*/
+ * Removes IPs from the logs
+ */
 
 	function rah_unlog_me() {
 		global $prefs, $event;
@@ -133,8 +135,8 @@
 	}
 
 /**
-	Redirects to the preferences panel
-*/
+ * Redirects to the preferences panel
+ */
 
 	function rah_unlog_me_prefs() {
 		header('Location: ?event=prefs#prefs-logging');
