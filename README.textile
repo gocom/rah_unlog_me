@@ -39,6 +39,12 @@ p. The second option of rah_unlog_me is a field where you can define a list of I
 
 h2. Changelog
 
+h3. Version 1.4 - upcoming
+
+* Changed: Moved embedded language strings to Textpacks.
+* Added: Finnish translation.
+* Added: Excluded IP list's wildcard support.
+
 h3. Version 1.3 - 2011/12/06
 
 * Changed: Use the exact same method as Textpattern to check logged in user's IP. Just for consistency, doesn't really affect anything.
@@ -46,15 +52,15 @@ h3. Version 1.3 - 2011/12/06
 
 h3. Version 1.2 - 2011/06/03
 
-* Don't throw up JavaScript to top of Preferences pane when JavaScript is disabled.
-* Sweep pre-defined list of IPs with a single query.
+* Imrpoved: Don't throw up JavaScript to top of Preferences pane when JavaScript is disabled.
+* Improved: Sweep pre-defined list of IPs with a single query.
 
 h3. Version 1.1 - 2011/03/14
 
-* Fixed typo in the uninstaller. Called step from "delete" to "deleted".
-* Added forgotten flags.
-* Added missing privileges for the plugins pane's options link.
-* Fixed typo in docs. Changed required TXP version from 4.0.7 to 4.2.0.
+* Fixed: Typo in the uninstaller. Called step from "delete" to "deleted".
+* Added: Forgotten flags.
+* Added: Missing privileges for the plugins pane's options link.
+* Fixed: Typo in docs. Changed required TXP version from 4.0.7 to 4.2.0.
 
 h3. Version 1.0 - 2011/03/13
 
