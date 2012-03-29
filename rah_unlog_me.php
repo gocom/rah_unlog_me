@@ -119,7 +119,7 @@
 		
 		safe_delete(
 			'txp_log',
-			'ip in('.implode(',',$ips).')'
+			'ip LIKE '.implode(' OR ip LIKE ', $ips)
 		);
 	}
 
