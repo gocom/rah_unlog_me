@@ -1,0 +1,4 @@
+#@admin
+#@language fi-fi
+rah_unlog_me_auto => Älä sisällytä lokeihin käyttäjien IP-osoitteita?
+rah_unlog_me_ip =>  Älä sisällytä lokeihin IP-osoitteita (pilkuin eroteltuna)
