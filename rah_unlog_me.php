@@ -14,20 +14,22 @@
  */
 
 	if(@txpinterface == 'admin') {
-		rah_unlog_me_installer();
-		rah_unlog_me();
+		rah_unlog_me::install();
+		rah_unlog_me::clean();
 		add_privs('plugin_prefs.rah_unlog_me', '1,2');
-		register_callback('rah_unlog_me_prefs', 'plugin_prefs.rah_unlog_me');
-		register_callback('rah_unlog_me_installer', 'plugin_lifecycle.rah_unlog_me');
+		register_callback(array('rah_unlog_me', 'prefs'), 'plugin_prefs.rah_unlog_me');
+		register_callback(array('rah_unlog_me', 'install'), 'plugin_lifecycle.rah_unlog_me');
 	}
 
-/**
- * Does installing and uninstalling.
- * @param string $event The admin-side event.
- * @param string $step The admin-side, plugin-lifecycle step.	
- */
+class rah_unlog_me {
 
-	function rah_unlog_me_installer($event='', $step='') {
+	/**
+	 * Does installing and uninstalling.
+	 * @param string $event The admin-side event.
+	 * @param string $step The admin-side, plugin-lifecycle step.	
+	 */
+
+	static public function install($event='', $step='') {
 		
 		global $prefs;
 		
@@ -96,11 +98,11 @@
 		$prefs['rah_unlog_me_auto'] = 1;
 	}
 
-/**
- * Removes IPs from the logs
- */
+	/**
+	 * Removes IPs from the logs
+	 */
 
-	function rah_unlog_me() {
+	static public function clean() {
 		global $prefs, $event;
 		
 		if($prefs['logging'] == 'none')
@@ -123,15 +125,17 @@
 		);
 	}
 
-/**
- * Redirects to the preferences panel
- */
+	/**
+	 * Redirects to the preferences panel
+	 */
 
-	function rah_unlog_me_prefs() {
+	static public function prefs() {
 		header('Location: ?event=prefs#prefs-logging');
 		echo 
 			'<p id="message">'.n.
 			'	<a href="?event=prefs#prefs-logging">'.gTxt('continue').'</a>'.n.
 			'</p>';
 	}
+}
+
 ?>
