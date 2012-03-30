@@ -36,7 +36,7 @@ p. If the first option, _Exclude site authors' IPs from the logs?_ is set to _Ye
 
 h3. Additional IPs to exclude from the logs (comma-separated)
 
-p. The second option of rah_unlog_me is a field where you can define a comma-separated (@,@) list of IPs which will be excluded from the logs. You can define as many IPs as you want.
+p. The second option of rah_unlog_me is a field where you can define a comma-separated (@,@) list of IPs which will be excluded from the logs.
 
 p. The field also supports wildcards. @%@ matches any number of characters, and @_@ matches exactly one character. With the wildcards it's easy to exclude whole address blocks. For example, following would exclude local devices from the logs.
 
