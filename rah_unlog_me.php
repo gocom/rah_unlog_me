@@ -59,18 +59,24 @@ class rah_unlog_me {
 				'1=1'
 			);
 		
-		$default['auto'] = $default['ip'] = '';
+		$default = 
+			array(
+				'auto' => '',
+				'ip' => ''
+			);
 		
 		if($rs && is_array($rs)) {
-			foreach($rs as $a)
+			
+			foreach($rs as $a) {
 				$default[$a['name']] = $a['value'];
+			}
 			
 			@safe_query(
 				'DROP TABLE IF EXISTS '.safe_pfx('rah_unlog_me')
 			);
 		}
 		
-		if(!isset($prefs['rah_unlog_me_auto']))
+		if(!isset($prefs['rah_unlog_me_auto'])) {
 			safe_insert(
 				'txp_prefs',
 				"prefs_id=1,
@@ -81,8 +87,9 @@ class rah_unlog_me {
 				html='yesnoradio',
 				position=221"
 			);
+		}
 		
-		if(!isset($prefs['rah_unlog_me_ip']))
+		if(!isset($prefs['rah_unlog_me_ip'])) {
 			safe_insert(
 				'txp_prefs',
 				"prefs_id=1,
@@ -93,6 +100,7 @@ class rah_unlog_me {
 				html='text_input',
 				position=222"
 			);
+		}
 		
 		$prefs['rah_unlog_me_ip'] = $default['ip'];
 		$prefs['rah_unlog_me_auto'] = 1;
@@ -108,11 +116,12 @@ class rah_unlog_me {
 		if($prefs['logging'] == 'none')
 			return;
 		
-		if($prefs['rah_unlog_me_auto'] == 1)
+		if($prefs['rah_unlog_me_auto']) {
 			safe_delete(
 				'txp_log',
 				"ip='".doSlash(remote_addr())."'"
 			);
+		}
 		
 		if($event != 'log' || !trim($prefs['rah_unlog_me_ip']))
 			return;
