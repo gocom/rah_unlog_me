@@ -12,33 +12,34 @@ h2. Requirements
 
 p. Rah_unlog_me's minimum requirements:
 
-* Textpattern 4.2.0 or newer.
+* Textpattern v4.2.0 or newer.
 * PHP5 or newer.
 
 h2. Installation and usage
 
 p. The general behavior stands when it comes to installing rah_unlog_me.
 
-* Navigate to Plugins pane: TXP/Admin/Plugins.
-* Copy and paste downloaded plugin code to the plugin installer field
- and run the automatic setup by clicking the _Upload_ button.
-* When all done, just active the plugin on the plugin list and you are ready to use rah_unlog_me's additional options.
+# Download and copy the plugin installation file contents.
+# Navigate to "Plugins":http://textpattern.net/wiki/index.php?title=Plugins panel and paste it into the _Install plugin_, and click _Upload_.
+# You will be shown a preview of the plugin and its documentation. Click *Install* at the bottom of the page.
+# You will be returned to the plugin list when the plugin has been installed. Now activate the plugin by clicking its *No* link, which toggles the status to *Yes* and actives it.
+# All done and the plugin is now installed and activated.
 
-p. You can find rah_unlog_me's preferences from Textpattern's preferences panel (Admin/Preferences), next to other logging related preferences.
+p. You can now find rah_unlog_me's options from Textpattern's "Preferences panel":http://textpattern.net/wiki/index.php?title=Basic_Preferences, next to other logging related options.
 
-h2. Preferences pane
+h2. Preferences
 
-p. Rah_unlog_me will add two new options to Textpattern's Preferences pane (found at Textpattern/Admin/Preferences); _an option to automatically exclude site authors' IPs_ and a field to define _a list of additional IPs to filter out_.
+p. Rah_unlog_me will add couple new options to Textpattern's "Preferences panel":http://textpattern.net/wiki/index.php?title=Basic_Preferences. These include an option to automatically exclude admins from logs and a field to define a list of additional IPs to filter out. The options are as follows.
 
 h3. Exclude site authors' IPs from the logs?
 
-p. If the first option, _Exclude site authors' IPs from the logs?_ is set to _Yes_, site admins' IPs are removed from the visitor logs when the users visit Textpattern's backend.
+p. If set to _Yes_, site admins' IP addresses are removed from the visitor logs when the users logs in to Textpattern control panel.
 
 h3. Additional IPs to exclude from the logs (comma-separated)
 
 p. The second option of rah_unlog_me is a field where you can define a comma-separated (@,@) list of IPs which will be excluded from the logs.
 
-p. The field also supports wildcards. @%@ matches any number of characters, and @_@ matches exactly one character. With the wildcards it's easy to exclude whole address blocks. For example, following would exclude local devices from the logs.
+p. This option supports wildcards. @%@ matches any number of characters, and @_@ matches exactly one character. With the wildcards it's easy to exclude whole address blocks. Following would exclude local devices from the logs:
 
 bc. ::_%, fc00::_%, 10._%, 127._%, 172.16._%, 192.168.0._%
 
