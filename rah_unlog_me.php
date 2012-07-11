@@ -141,7 +141,7 @@ class rah_unlog_me {
 	static public function prefs() {
 		header('Location: ?event=prefs#prefs-logging');
 		echo 
-			'<p id="message">'.n.
+			'<p>'.n.
 			'	<a href="?event=prefs#prefs-logging">'.gTxt('continue').'</a>'.n.
 			'</p>';
 	}
