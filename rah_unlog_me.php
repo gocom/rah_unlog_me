@@ -13,15 +13,20 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-	if(@txpinterface == 'admin') {
-		rah_unlog_me::install();
-		rah_unlog_me::clean();
-		add_privs('plugin_prefs.rah_unlog_me', '1,2');
-		register_callback(array('rah_unlog_me', 'prefs'), 'plugin_prefs.rah_unlog_me');
-		register_callback(array('rah_unlog_me', 'install'), 'plugin_lifecycle.rah_unlog_me');
-	}
+	new rah_unlog_me();
 
 class rah_unlog_me {
+
+	/**
+	 * Constructor
+	 */
+
+	public function __construct() {
+		add_privs('plugin_prefs.rah_unlog_me', '1,2');
+		register_callback(array($this, 'prefs'), 'plugin_prefs.'.__CLASS__);
+		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
+		$this->clean();
+	}
 
 	/**
 	 * Does installing and uninstalling.
@@ -110,7 +115,7 @@ class rah_unlog_me {
 	 * Removes IPs from the logs
 	 */
 
-	static public function clean() {
+	public function clean() {
 		global $prefs, $event;
 		
 		if($prefs['logging'] == 'none')
@@ -138,7 +143,7 @@ class rah_unlog_me {
 	 * Redirects to the preferences panel
 	 */
 
-	static public function prefs() {
+	public function prefs() {
 		header('Location: ?event=prefs#prefs-logging');
 		echo 
 			'<p>'.n.
