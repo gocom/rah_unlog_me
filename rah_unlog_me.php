@@ -49,8 +49,9 @@ class rah_unlog_me {
 		if(
 			isset($prefs['rah_unlog_me_auto']) && 
 			isset($prefs['rah_unlog_me_ip'])
-		)
+		) {
 			return;
+		}
 			
 		/*
 			Run migration and clean-up if older version was
@@ -118,8 +119,9 @@ class rah_unlog_me {
 	public function clean() {
 		global $prefs, $event;
 		
-		if($prefs['logging'] == 'none')
+		if($prefs['logging'] == 'none') {
 			return;
+		}
 		
 		if($prefs['rah_unlog_me_auto']) {
 			safe_delete(
@@ -128,8 +130,9 @@ class rah_unlog_me {
 			);
 		}
 		
-		if($event != 'log' || !trim($prefs['rah_unlog_me_ip']))
+		if($event != 'log' || !trim($prefs['rah_unlog_me_ip'])) {
 			return;
+		}
 		
 		$ips = quote_list(do_list($prefs['rah_unlog_me_ip']));
 		
