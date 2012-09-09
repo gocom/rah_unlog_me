@@ -58,9 +58,9 @@ class rah_unlog_me {
 				'ip' => array('text_input', ''),
 			);
 		
-		@$rs = safe_rows('*', 'rah_unlog_me', '1=1');
-		
-		if($rs) {
+		if(in_array(PFX.'rah_unlog_me', getThings('SHOW TABLES'))) {
+			$rs = safe_rows('*', 'rah_unlog_me', '1=1');
+			
 			foreach($rs as $a) {
 				if(isset($opt[$a['name']])) {
 					$opt[$a['name']][1] = $a['value'];
