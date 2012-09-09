@@ -16,6 +16,8 @@
 	new rah_unlog_me();
 
 class rah_unlog_me {
+	
+	static public $version = '1.4';
 
 	/**
 	 * Constructor
@@ -46,70 +48,43 @@ class rah_unlog_me {
 			return;
 		}
 
-		if(
-			isset($prefs['rah_unlog_me_auto']) && 
-			isset($prefs['rah_unlog_me_ip'])
-		) {
+		if((string) get_pref(__CLASS__.'_version') === self::$version) {
 			return;
 		}
-			
-		/*
-			Run migration and clean-up if older version was
-			installed
-		*/
 		
-		@$rs = 
-			safe_rows(
-				'*',
-				'rah_unlog_me',
-				'1=1'
-			);
-		
-		$default = 
+		$opt = 
 			array(
-				'auto' => '',
-				'ip' => ''
+				'auto' => array('yesnoradio', 1),
+				'ip' => array('text_input', ''),
 			);
 		
-		if($rs && is_array($rs)) {
-			
+		@$rs = safe_rows('*', 'rah_unlog_me', '1=1');
+		
+		if($rs) {
 			foreach($rs as $a) {
-				$default[$a['name']] = $a['value'];
+				if(isset($opt[$a['name']])) {
+					$opt[$a['name']][1] = $a['value'];
+				}
 			}
 			
-			@safe_query(
-				'DROP TABLE IF EXISTS '.safe_pfx('rah_unlog_me')
-			);
+			@safe_query('DROP TABLE IF EXISTS '.safe_pfx('rah_unlog_me'));
 		}
 		
-		if(!isset($prefs['rah_unlog_me_auto'])) {
-			safe_insert(
-				'txp_prefs',
-				"prefs_id=1,
-				name='rah_unlog_me_auto',
-				val=".($default['auto'] == 'no' ? 0 : 1).",
-				type=0,
-				event='publish',
-				html='yesnoradio',
-				position=221"
-			);
+		$position = 221;
+		
+		foreach($opt as $name => $val) {
+			$n = __CLASS__.'_'.$name;
+			
+			if(!isset($prefs[$n])) {
+				set_pref($n, $val[1], 'publish', PREF_BASIC, $val[0], $position);
+				$prefs[$n] = $val[1];
+			}
+			
+			$position++;
 		}
 		
-		if(!isset($prefs['rah_unlog_me_ip'])) {
-			safe_insert(
-				'txp_prefs',
-				"prefs_id=1,
-				name='rah_unlog_me_ip',
-				val='".doSlash($default['ip'])."',
-				type=0,
-				event='publish',
-				html='text_input',
-				position=222"
-			);
-		}
-		
-		$prefs['rah_unlog_me_ip'] = $default['ip'];
-		$prefs['rah_unlog_me_auto'] = 1;
+		set_pref(__CLASS__.'_version', self::$version, __CLASS__, 2, '', 0);
+		$prefs[__CLASS__.'_version'] = self::$version;
 	}
 
 	/**
@@ -117,24 +92,24 @@ class rah_unlog_me {
 	 */
 
 	public function clean() {
-		global $prefs, $event;
+		global $logging, $event;
 		
-		if($prefs['logging'] == 'none') {
+		if($logging == 'none') {
 			return;
 		}
 		
-		if($prefs['rah_unlog_me_auto']) {
+		if(get_pref('rah_unlog_me_auto')) {
 			safe_delete(
 				'txp_log',
 				"ip='".doSlash(remote_addr())."'"
 			);
 		}
 		
-		if($event != 'log' || !trim($prefs['rah_unlog_me_ip'])) {
+		if($event != 'log' || !trim(get_pref('rah_unlog_me_ip'))) {
 			return;
 		}
 		
-		$ips = quote_list(do_list($prefs['rah_unlog_me_ip']));
+		$ips = quote_list(do_list(get_pref('rah_unlog_me_ip')));
 		
 		safe_delete(
 			'txp_log',
