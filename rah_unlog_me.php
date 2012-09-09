@@ -60,13 +60,19 @@ class rah_unlog_me {
 		
 		if(in_array(PFX.'rah_unlog_me', getThings('SHOW TABLES'))) {
 			$rs = safe_rows('*', 'rah_unlog_me', '1=1');
-			
+
 			foreach($rs as $a) {
-				if(isset($opt[$a['name']])) {
-					$opt[$a['name']][1] = $a['value'];
+				if(!isset($opt[$a['name']])) {
+					continue;
 				}
+				
+				if($a['name'] == 'auto') {
+					$a['value'] = $a['value'] == 'no' ? 0 : 1;
+				}
+				
+				$opt[$a['name']][1] = $a['value'];
 			}
-			
+
 			@safe_query('DROP TABLE IF EXISTS '.safe_pfx('rah_unlog_me'));
 		}
 		
