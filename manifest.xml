@@ -3,7 +3,7 @@
 	<name>rah_unlog_me</name>
 	<description>Exclude IPs from visitor logs</description>
 	
-	<version>1.4</version>
+	<version>1.4.1</version>
 	<type>3</type>
 	
 	<author>Jukka Svahn</author>

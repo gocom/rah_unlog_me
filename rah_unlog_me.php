@@ -17,7 +17,7 @@
 
 class rah_unlog_me {
 	
-	static public $version = '1.4';
+	static public $version = '1.4.1';
 
 	/**
 	 * Constructor
