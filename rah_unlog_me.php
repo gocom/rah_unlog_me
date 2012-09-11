@@ -121,26 +121,13 @@ class rah_unlog_me {
 	public function clean() {
 		global $logging, $event;
 		
-		if($logging == 'none') {
+		if($logging == 'none' || !get_pref('rah_unlog_me_auto')) {
 			return;
 		}
-		
-		if(get_pref('rah_unlog_me_auto')) {
-			safe_delete(
-				'txp_log',
-				"ip='".doSlash(remote_addr())."'"
-			);
-		}
-		
-		if($event != 'log' || !get_pref('rah_unlog_me_ip')) {
-			return;
-		}
-		
-		$ips = quote_list(do_list(get_pref('rah_unlog_me_ip')));
 		
 		safe_delete(
 			'txp_log',
-			'ip LIKE '.implode(' OR ip LIKE ', $ips)
+			"ip='".doSlash(remote_addr())."'"
 		);
 	}
 
