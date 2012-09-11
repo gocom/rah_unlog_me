@@ -105,7 +105,11 @@ class rah_unlog_me {
 			return;
 		}
 		
-		if((get_pref('rah_unlog_me_auto') && is_logged_in()) || (get_pref('rah_unlog_me_ip') && in_array(remote_addr(), do_list(get_pref('rah_unlog_me_ip'))))) {
+		if(get_pref('rah_unlog_me_auto') && is_logged_in()) {
+			$nolog = true;
+		}
+		
+		else if(get_pref('rah_unlog_me_ip') && getThing("SELECT '".doSlash(remote_addr())."' LIKE ". implode(" OR '".doSlash(remote_addr())."' LIKE ", quote_list(do_list(get_pref('rah_unlog_me_ip')))))) {
 			$nolog = true;
 		}
 	}
