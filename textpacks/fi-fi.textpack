@@ -1,4 +1,4 @@
 #@admin
 #@language fi-fi
-rah_unlog_me_auto => Poislue lokeista käyttäjien IP-osoitteet?
+rah_unlog_me_auto => Poislue lokeista sivuston käyttäjät?
 rah_unlog_me_ip => Poislue lokeista IP-osoitteiteet (pilkuin eroteltuna)
