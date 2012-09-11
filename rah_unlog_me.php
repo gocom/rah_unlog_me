@@ -95,17 +95,17 @@ class rah_unlog_me {
 	}
 
 	/**
-	 * Prevent defined list of IPs from logging
+	 * Prevent hits from logging
 	 */
 
 	public function block() {
 		global $logging, $nolog;
 		
-		if($logging == 'none' || !get_pref('rah_unlog_me_ip')) {
+		if($logging == 'none') {
 			return;
 		}
 		
-		if(in_array(remote_addr(), do_list(get_pref('rah_unlog_me_ip')))) {
+		if((get_pref('rah_unlog_me_auto') && is_logged_in()) || (get_pref('rah_unlog_me_ip') && in_array(remote_addr(), do_list(get_pref('rah_unlog_me_ip'))))) {
 			$nolog = true;
 		}
 	}
