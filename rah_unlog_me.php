@@ -27,7 +27,8 @@ class rah_unlog_me {
 		add_privs('plugin_prefs.rah_unlog_me', '1,2');
 		register_callback(array($this, 'prefs'), 'plugin_prefs.'.__CLASS__);
 		register_callback(array(__CLASS__, 'install'), 'plugin_lifecycle.'.__CLASS__);
-		$this->clean();
+		register_callback(array($this, 'block'), 'log_hit');
+		register_callback(array($this, 'clean'), 'admin_side', 'head_end');
 	}
 
 	/**
@@ -94,6 +95,22 @@ class rah_unlog_me {
 	}
 
 	/**
+	 * Prevent defined list of IPs from logging
+	 */
+
+	public function block() {
+		global $logging, $nolog;
+		
+		if($logging == 'none' || !get_pref('rah_unlog_me_ip')) {
+			return;
+		}
+		
+		if(in_array(remote_addr(), do_list(get_pref('rah_unlog_me_ip')))) {
+			$nolog = true;
+		}
+	}
+
+	/**
 	 * Removes IPs from the logs
 	 */
 
@@ -111,7 +128,7 @@ class rah_unlog_me {
 			);
 		}
 		
-		if($event != 'log' || !trim(get_pref('rah_unlog_me_ip'))) {
+		if($event != 'log' || !get_pref('rah_unlog_me_ip')) {
 			return;
 		}
 		

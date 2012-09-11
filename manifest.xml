@@ -4,7 +4,7 @@
 	<description>Exclude IPs from visitor logs</description>
 	
 	<version>1.4.1</version>
-	<type>3</type>
+	<type>1</type>
 	
 	<author>Jukka Svahn</author>
 	<author_uri>http://rahforum.biz</author_uri>
