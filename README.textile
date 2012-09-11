@@ -34,7 +34,7 @@ p. Rah_unlog_me will add couple new settings to Textpattern's "Preferences panel
 
 h3. Exclude site authors' IPs from the logs?
 
-p. If set to _Yes_, site admins' IP addresses are removed from the visitor logs when the users logs in to Textpattern control panel.
+p. If set to _Yes_, site admins' IP addresses are removed from the visitor logs when the users logs in to the Textpattern's control panel.
 
 h3. Additional IPs to exclude from the logs (comma-separated)
 
@@ -45,6 +45,10 @@ p. This option supports wildcards. @%@ matches any number of characters, and @_@
 bc. ::_%, fc00::_%, 10._%, 127._%, 172.16._%, 192.168.0._%
 
 h2. Changelog
+
+h3. Version 1.5 - upcoming
+
+* Changed: Block hits actively instead of cleaning the database after.
 
 h3. Version 1.4.1 - 2012/09/10
 
