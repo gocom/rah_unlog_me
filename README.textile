@@ -48,7 +48,8 @@ h2. Changelog
 
 h3. Version 1.5 - upcoming
 
-* Changed: Block hits actively instead of cleaning the database after.
+* Changed: Block hits actively instead of cleaning the database after. Prevents the database from needlessly growing, and removes any side-effects caused by deleting large number of rows.
+* Improved: Cleaned up the installer.
 
 h3. Version 1.4.1 - 2012/09/10
 
