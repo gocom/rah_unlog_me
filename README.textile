@@ -14,8 +14,7 @@ h2. Requirements
 
 p. Rah_unlog_me's minimum requirements:
 
-* Textpattern 4.2.0 or newer.
-* PHP 5 or newer.
+* Textpattern 4.5.0 or newer.
 
 h2. Installing
 
@@ -52,6 +51,7 @@ h3. Version 1.5 - upcoming
 
 * Changed: Block hits actively instead of cleaning the database after. Prevents the database from needlessly growing, and removes any side-effects caused by deleting large number of rows.
 * Improved: Cleaned up the installer.
+* Now requires Textpattern 4.5.0 or newer.
 
 h3. Version 1.4.1 - 2012/09/10
 
