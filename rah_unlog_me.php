@@ -56,7 +56,7 @@ class rah_unlog_me {
 		$opt = 
 			array(
 				'auto' => array('yesnoradio', 1),
-				'ip' => array('text_input', ''),
+				'ip' => array('pref_longtext_input', ''),
 			);
 		
 		if(in_array(PFX.'rah_unlog_me', getThings('SHOW TABLES'))) {
