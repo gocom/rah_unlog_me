@@ -2,10 +2,7 @@ h1. rah_unlog_me
 
 "Packagist":https://packagist.org/packages/rah/rah_unlog_me | "Issues":https://github.com/gocom/rah_unlog_me/issues
 
-Exclude set of IP addresses from "Textpattern CMS'":https://textpattern.com/ visitor logs. Can automatically filter out your own hits, site admins and hits made by bots. The plugin adds easy-to-use logging options to Textpattern's Preferences panel that allow one to:
-
-* Exclude list of IPs from visitor logs.
-* Automatically strip logged-in site editors' visits from logs.
+Exclude set of IP addresses from "Textpattern CMS'":https://textpattern.com/ visitor logs. Can automatically filter out your own hits, site admins and hits made by bots. The plugin adds easy-to-use logging options to Textpattern's Preferences panel.
 
 h2. Install
 
