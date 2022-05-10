@@ -1,53 +1,39 @@
 h1. rah_unlog_me
 
-p. "Project page":http://rahforum.biz/plugins/rah_unlog_me | "Twitter":http://twitter.com/gocom | "GitHub":https://github.com/gocom/rah_unlog_me | "Support forum":http://forum.textpattern.com/viewtopic.php?id=30802 | "Donate":http://rahforum.biz/donate/rah_unlog_me
+"Download":https://github.com/gocom/rah_unlog_me/releases | "Packagist":https://packagist.org/packages/rah/rah_unlog_me | "Issues":https://github.com/gocom/rah_unlog_me/issues
 
-p. Exclude set of IP addresses from "Textpattern's":http://textpattern.com/ visitor logs. Can automatically filter out your own hits, site authors and hits made by nasty bots. The plugin adds easy-to-use logging options to Textpattern's Preferences panel.
-
-h2. List of features
+Exclude set of IP addresses from "Textpattern CMS'":https://textpattern.com/ visitor logs. Can automatically filter out your own hits, site admins and hits made by bots. The plugin adds easy-to-use logging options to Textpattern's Preferences panel that allow one to:
 
 * Exclude list of IPs from visitor logs.
-* Automatically strip site editors' visits from logs.
-* Integrates well with Textpattern's native user-interface.
+* Automatically strip logged-in site editors' visits from logs.
 
-h2. Requirements
+h2. Install
 
-p. Rah_unlog_me's minimum requirements:
+Using "Composer":https://getcomposer.org:
 
-* Textpattern 4.5.0 or newer.
+bc. $ composer require rah/rah_unlog_me
 
-h2. Installing
-
-p. Rah_unlog_me's installation follows the standard plugin installation steps.
-
-# Download the plugin installation code.
-# Copy and paste the installation code into the _Install plugin_ box of your Textpattern Plugin pane.
-# Run the automated setup.
-# After the setup is done, activate the plugin. Done.
-
-h2. Configuring
-
-p. After installation, you can find rah_unlog_me's settings from Textpattern's "Preferences panel":http://textpattern.net/wiki/index.php?title=Basic_Preferences, next to other logging related options.
+Or "download":https://github.com/gocom/rah_unlog_me/releases an installer package.
 
 h2. Preferences
 
-p. Rah_unlog_me will add couple new settings to Textpattern's "Preferences panel":http://textpattern.net/wiki/index.php?title=Basic_Preferences. These include an option to automatically exclude admins from logs and a field to define a list of additional IPs to filter out. The settings are as follows.
+After installation, you can find rah_unlog_me's settings from Textpattern's "Preferences panel":https://docs.textpattern.com/administration/preferences-panel, under *Log Exclusions* section.
 
 h3. Exclude site authors' IPs from the logs?
 
-p. If set to _Yes_, site admins' IP addresses are removed from the visitor logs when the users logs in to the Textpattern's control panel.
+If set to _Yes_, site admin's visits are not logged while logged-in to the Textpattern admin.
 
 h3. Additional IPs to exclude from the logs (comma-separated)
 
-p. The second option of rah_unlog_me is a field where you can define a comma-separated (@,@) list of IPs which will be excluded from the logs.
+The second option of rah_unlog_me is a field where you can define a comma-separated (@,@) list of IPs which will be excluded from the logs.
 
-p. This option supports wildcards. @%@ matches any number of characters, and @_@ matches exactly one character. With the wildcards it's easy to exclude whole address blocks. Following would exclude local devices from the visitor log:
+This option supports wildcards. @%@ matches any number of characters, and @_@ matches exactly one character. With the wildcards it's easy to exclude whole address blocks. Following would exclude local devices from the visitor log:
 
 bc. ::_%, fc00::_%, 10._%, 127._%, 172.16._%, 192.168.0._%
 
 h2. Changelog
 
-h3. Version 1.5 - upcoming
+h3. Version 1.5.0 - upcoming
 
 * Changed: Block hits actively instead of cleaning the database after. Prevents the database from needlessly growing, and removes any side-effects caused by deleting large number of rows.
 * Improved: Cleaned up the installer.
