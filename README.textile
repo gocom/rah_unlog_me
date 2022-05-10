@@ -1,6 +1,6 @@
 h1. rah_unlog_me
 
-"Download":https://github.com/gocom/rah_unlog_me/releases | "Packagist":https://packagist.org/packages/rah/rah_unlog_me | "Issues":https://github.com/gocom/rah_unlog_me/issues
+"Packagist":https://packagist.org/packages/rah/rah_unlog_me | "Issues":https://github.com/gocom/rah_unlog_me/issues
 
 Exclude set of IP addresses from "Textpattern CMS'":https://textpattern.com/ visitor logs. Can automatically filter out your own hits, site admins and hits made by bots. The plugin adds easy-to-use logging options to Textpattern's Preferences panel that allow one to:
 
@@ -12,8 +12,6 @@ h2. Install
 Using "Composer":https://getcomposer.org:
 
 bc. $ composer require rah/rah_unlog_me
-
-Or "download":https://github.com/gocom/rah_unlog_me/releases an installer package.
 
 h2. Preferences
 
