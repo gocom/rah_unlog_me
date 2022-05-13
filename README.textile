@@ -1,6 +1,6 @@
 h1. rah_unlog_me
 
-"Packagist":https://packagist.org/packages/rah/rah_unlog_me | "Issues":https://github.com/gocom/rah_unlog_me/issues
+"Download":https://github.com/gocom/rah_unlog_me/releases | "Packagist":https://packagist.org/packages/rah/rah_unlog_me | "Issues":https://github.com/gocom/rah_unlog_me/issues
 
 Exclude set of IP addresses from "Textpattern CMS'":https://textpattern.com/ visitor logs. Can automatically filter out your own hits, site admins and hits made by bots. The plugin adds easy-to-use logging options to Textpattern's Preferences panel.
 
@@ -10,9 +10,11 @@ Using "Composer":https://getcomposer.org:
 
 bc. $ composer require rah/rah_unlog_me
 
+Or "download":https://github.com/gocom/rah_unlog_me/releases an installer package.
+
 h2. Preferences
 
-After installation, you can find rah_unlog_me's settings from Textpattern's "Preferences panel":https://docs.textpattern.com/administration/preferences-panel, under *Log Exclusions* section.
+After installation, you can find rah_unlog_me's settings from Textpattern's "Preferences panel":https://docs.textpattern.com/administration/preferences-panel, under *Visitor log exclusions* section.
 
 h3. Exclude site authors' IPs from the logs?
 
@@ -28,11 +30,10 @@ bc. ::_%, fc00::_%, 10._%, 127._%, 172.16._%, 192.168.0._%
 
 h2. Changelog
 
-h3. Version 1.5.0 - upcoming
+h3. Version 1.5.0 - 2022/05/13
 
-* Changed: Block hits actively instead of cleaning the database after. Prevents the database from needlessly growing, and removes any side-effects caused by deleting large number of rows.
-* Improved: Cleaned up the installer.
-* Now requires Textpattern 4.5.0 or newer.
+* Now actively block hits instead of cleaning the database after. While giving performance benefits, current versions of Texptattern do not save the IP addresses to logs, so cleaning wouldn't be possible either.
+* Now requires Textpattern CMS >= 4.8.0.
 
 h3. Version 1.4.1 - 2012/09/10
 

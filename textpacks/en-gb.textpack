@@ -1,5 +1,5 @@
 #@admin
 #Default language, en-us, en-gb
-rah_unlog_me => Log Exclusions
+rah_unlog_me => Visitor log exclusions
 rah_unlog_me_auto => Exclude site admins from the logs?
 rah_unlog_me_ip =>  IPs to exclude from the logs (comma-separated)

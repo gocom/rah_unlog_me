@@ -1,5 +1,5 @@
 #@admin
 #@language fi-fi
-rah_unlog_me => Lokien poistolista
-rah_unlog_me_auto => Poislue lokeista sivuston käyttäjät?
+rah_unlog_me => Käyttäjälokien poistolista
+rah_unlog_me_auto => Poislue lokeista hallinnan käyttäjät?
 rah_unlog_me_ip => Poislue lokeista IP-osoitteiteet (pilkuin eroteltuna)

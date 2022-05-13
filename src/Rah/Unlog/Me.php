@@ -37,7 +37,6 @@ final class Rah_Unlog_Me
         register_callback([$this, 'install'], 'plugin_lifecycle.rah_unlog_me', 'installed');
         register_callback([$this, 'uninstall'], 'plugin_lifecycle.rah_unlog_me', 'deleted');
         register_callback([$this, 'prevent'], 'log_hit');
-        register_callback([$this, 'clean'], 'admin_side', 'head_end');
     }
 
     /**
@@ -81,23 +80,6 @@ final class Rah_Unlog_Me
         ) {
             $nolog = true;
         }
-    }
-
-    /**
-     * Removes current IP address from the logs.
-     */
-    public function clean(): void
-    {
-        global $logging;
-
-        if ($logging === 'none' || !get_pref('rah_unlog_me_auto')) {
-            return;
-        }
-
-        safe_delete(
-            'txp_log',
-            "ip='".doSlash(remote_addr())."'"
-        );
     }
 
     /**
